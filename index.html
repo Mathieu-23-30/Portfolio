@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathieu Rey | Portfolio</title>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --accent-color: #2e5cb8;
+            --accent-hover: #1e3a8a;
+            --nav-bg: #ffffff;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--nav-bg);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #e1e8ed;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        nav .logo { font-weight: bold; font-size: 1.5rem; color: var(--accent-color); text-transform: uppercase; letter-spacing: 1px; }
+        nav ul { display: flex; list-style: none; gap: 1.5rem; align-items: center; }
+        nav a { color: var(--text-color); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.3s; }
+        nav a:hover, nav a.active { color: var(--accent-color); }
+
+        .cv-nav-btn {
+            background-color: transparent;
+            color: var(--accent-color) !important;
+            border: 1px solid var(--accent-color);
+            padding: 0.4rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        .cv-nav-btn:hover {
+            background-color: var(--accent-color);
+            color: white !important;
+        }
+
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #ffffff;
+            min-width: 220px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+            z-index: 1000;
+            border-radius: 4px;
+            border: 1px solid #e1e8ed;
+            top: 100%;
+            left: 0;
+        }
+        .dropdown-content a { color: #333333; padding: 12px 16px; text-decoration: none; display: block; }
+        .dropdown-content a:hover { background-color: #f4f7f6; color: var(--accent-color); }
+        .dropdown:hover .dropdown-content { display: block; }
+
+        .hero {
+            height: 100vh;
+            background-image: url('rafale-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); }
+        
+        .hero-content { z-index: 10; text-align: center; max-width: 1050px; padding: 2rem; }
+        .hero h1 { font-size: 3.8rem; margin-bottom: 0.5rem; font-weight: 700; color: #ffffff; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); }
+        .hero h2 { font-size: 2.2rem; margin-bottom: 1.5rem; font-weight: 600; color: #38bdf8; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7); }
+        .hero p { font-size: 1.25rem; margin-bottom: 2.5rem; color: rgba(255, 255, 255, 0.95); text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); }
+
+        .btn-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .btn { display: inline-block; background-color: var(--accent-color); color: white; padding: 0.8rem 2rem; border-radius: 4px; text-decoration: none; font-weight: bold; transition: background-color 0.3s; font-size: 1.1rem; }
+        .btn:hover { background-color: var(--accent-hover); }
+
+        section { max-width: 1100px; margin: 0 auto; padding: 80px 2rem; }
+        h2.section-title { font-size: 2.2rem; margin-bottom: 2rem; border-bottom: 2px solid var(--accent-color); padding-bottom: 0.5rem; color: var(--accent-color); text-align: center; }
+
+        .about-container { display: flex; gap: 3rem; align-items: center; margin-top: 2rem; }
+        .about-text { flex: 2; font-size: 1.1rem; color: #444444; }
+        .about-text p { margin-bottom: 1.2rem; }
+        .about-interests { flex: 1; background: var(--card-bg); padding: 2rem; border-radius: 8px; border: 1px solid #e1e8ed; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .about-interests h3 { color: var(--accent-color); margin-bottom: 1rem; font-size: 1.3rem; border-bottom: 1px solid #e1e8ed; padding-bottom: 0.5rem; }
+        .about-interests ul { list-style: none; }
+        .about-interests ul li { position: relative; padding-left: 25px; margin-bottom: 0.8rem; font-weight: 500; }
+        .about-interests ul li::before { content: "➔"; position: absolute; left: 0; color: var(--accent-color); }
+
+        /* STYLES SECTION SAÉ & PROJETS */
+        .sae-intro-box {
+            background-color: #ffffff;
+            border-left: 5px solid #0d9488;
+            padding: 2rem;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-top: 1px solid #e1e8ed;
+            border-right: 1px solid #e1e8ed;
+            border-bottom: 1px solid #e1e8ed;
+        }
+        .sae-intro-box h3 { color: #0d9488; margin-bottom: 0.8rem; font-size: 1.3rem; }
+        .sae-intro-box p { color: #444444; font-size: 1.05rem; }
+        
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .project-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border: 1px solid #e1e8ed;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .project-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.08); }
+        .project-card h4 { font-size: 1.3rem; color: var(--accent-color); margin-bottom: 0.8rem; margin-top: 0.5rem; }
+        .project-card p { color: #555555; font-size: 0.98rem; margin-bottom: 1.5rem; flex-grow: 1; }
+        .project-link { color: var(--accent-color); text-decoration: none; font-weight: 600; font-size: 0.95rem; margin-top: auto; }
+        .project-link:hover { text-decoration: underline; }
+
+        .grid-skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+        .card-skill { background-color: var(--card-bg); padding: 2rem; border-radius: 8px; border: 1px solid #e1e8ed; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .card-skill h3 { color: var(--accent-color); margin-bottom: 1.2rem; font-size: 1.15rem; }
+        .card-skill ul { list-style-type: none; color: var(--text-muted); }
+        .card-skill ul li { position: relative; padding-left: 20px; margin-bottom: 0.5rem; font-size: 0.95rem; }
+        .card-skill ul li::before { content: "•"; color: var(--accent-color); font-weight: bold; position: absolute; left: 0; }
+
+        footer { background-color: #333333; text-align: center; padding: 2rem; color: #ffffff; margin-top: 4rem; }
+        
+        @media (max-width: 768px) {
+            .about-container { flex-direction: column; gap: 1.5rem; }
+            .hero h1 { font-size: 2.5rem; }
+            nav ul { display: none; }
+            .btn-group { flex-direction: column; gap: 0.8rem; }
+            .projects-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">Mathieu Rey</div>
+            <ul>
+                <li><a href="index.html" class="active">Accueil</a></li>
+                <li><a href="geii.html">Mon BUT GEII</a></li>
+                <li class="dropdown">
+                    <a href="#" style="cursor: default;">Projets ▾</a>
+                    <div class="dropdown-content">
+                        <a href="rafale.html">Miniature Rafale</a>
+                        <a href="thermometre.html">Thermomètre Intelligent</a>
+                        <a href="kart.html">Propeller Kart (SAÉ 2.01) 🏎️</a>
+                    </div>
+                </li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="CV_Mathieu_Rey.pdf" target="_blank" class="cv-nav-btn">Mon CV 📄</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div id="accueil" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Mathieu Rey</h1>
+            <h2>Étudiant en BUT GEII — Électronique & Systèmes Embarqués</h2>
+            <p>Bienvenue sur mon espace professionnel. Découvrez mon parcours, mes passions techniques et mes réalisations d'ingénierie.</p>
+            <div class="btn-group">
+                <a href="#sae-projets" class="btn">Consulter mes SAÉ & Projets 👇</a>
+                <a href="CV_Mathieu_Rey.pdf" target="_blank" class="btn" style="background-color: #107c41;">Télécharger mon CV (PDF)</a>
+            </div>
+        </div>
+    </div>
+
+    <section id="propos">
+        <h2 class="section-title">À Propos de Moi</h2>
+        <div class="about-container">
+            <div class="about-text">
+                <p>J'ai choisi le BUT GEII car j'aime l'alliance entre la théorie et la pratique. Cette formation me permet de comprendre le fonctionnement des systèmes technologiques actuels, de la conception sur ordinateur jusqu'à la fabrication de cartes électroniques en laboratoire.</p>
+                <p>Je suis quelqu'un de curieux et j'aime fabriquer des choses par moi-même. Les heures passées en projet à l'IUT m'apprennent à travailler en équipe, à respecter un cahier des charges et à trouver l'origine d'une panne de manière méthodique.</p>
+                <p>En dehors des études, je pratique le basket-ball en club. Cette activité m'a permis de développer l'esprit d'équipe, l'écoute et le sens des responsabilités à travers le coaching et l'arbitrage.</p>
+            </div>
+            <div class="about-interests">
+                <h3>Mes Centres d'Intérêt</h3>
+                <ul>
+                    <li>Aéronautique & Avionique</li>
+                    <li>Hardware PC & Intégration</li>
+                    <li>Basket-ball (Club & Arbitrage)</li>
+                    <li>Secteur Nautique</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="sae-projets">
+        <h2 class="section-title">Mes Projets & SAÉ</h2>
+        
+        <div class="sae-intro-box">
+            <h3>🎯 Qu'est-ce qu'une SAÉ ?</h3>
+            <p>Les <strong>SAÉ (Situations d'Apprentissage et d'Évaluation)</strong> sont les projets phares de notre cursus en BUT GEII. Ils nous apprennent à collaborer à des échelles différentes : nous avons commencé par des réalisations en <strong>binôme</strong>, puis nous avons conçu le Thermomètre connecté au sein d'une équipe de <strong>4 étudiants</strong>, et nous travaillons actuellement sur un projet de Kart à hélice réunissant un groupe de <strong>8 étudiants</strong>. Cette progression nous forme directement à la gestion de projet et aux méthodes d'ingénierie industrielles.</p>
+        </div>
+
+        <div class="projects-grid">
+            <div class="project-card">
+                <h4>Maquette d'Étude — Rafale M</h4>
+                <p>Étude fonctionnelle et intégration de sous-systèmes. Ce projet allie rigueur technique, modélisation et passion pour l'aéronautique militaire et de défense.</p>
+                <a href="rafale.html" class="project-link">Voir le projet détaillé →</a>
+            </div>
+
+            <div class="project-card">
+                <h4>Thermomètre de Bain Intelligent</h4>
+                <p>Conception complète d'un thermomètre autonome sur circuit imprimé double-face. Intégration d'une sonde de température analogique LM35, gestion d'alertes visuelles par LED et programmation d'un microcontrôleur.</p>
+                <a href="thermometre.html" class="project-link">Voir le projet détaillé →</a>
+            </div>
+
+            <div class="project-card">
+                <h4>Kart à hélice</h4>
+                <p>Coordination d'une équipe de 8 étudiants pour la création d'un véhicule électrique propulsé par hélice. Suivi complet du cycle en V : du Cahier des Charges (CDC) jusqu'au Dossier de Vérification (DDV).</p>
+                <a href="kart.html" class="project-link">Voir le projet détaillé →</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="competences" style="background: #ffffff; max-width: 100%; border-top: 1px solid #e1e8ed; border-bottom: 1px solid #e1e8ed;">
+        <div style="max-width: 1100px; margin: 0 auto; padding: 2rem;">
+            <h2 class="section-title">Mes Compétences Transverses & Humaines</h2>
+            <div class="grid-skills">
+                <div class="card-skill">
+                    <h3>🤝 Travail en Équipe & Collaboration</h3>
+                    <ul>
+                        <li>Coordonner des actions communes au sein de groupes projet (SAÉ).</li>
+                        <li>Savoir écouter, partager des idées et répartir les tâches efficacement pour atteindre un objectif commun.</li>
+                        <li>Esprit d'équipe développé à travers le sport collectif et l'encadrement.</li>
+                    </ul>
+                </div>
+                <div class="card-skill">
+                    <h3>🎯 Rigueur et Organisation</h3>
+                    <ul>
+                        <li>Suivre un protocole strict de tests et de mesures.</li>
+                        <li>Respecter des échéances et gérer son temps lors des phases de prototypage.</li>
+                        <li>Méthodologie d'analyse pour localiser et résoudre une panne matérielle.</li>
+                    </ul>
+                </div>
+                <div class="card-skill">
+                    <h3>📢 Communication & Restitution</h3>
+                    <ul>
+                        <li>Rédiger des dossiers techniques structurés et clairs (CDC, DDF).</li>
+                        <li>Soutenir et argumenter des choix techniques lors de présentations orales.</li>
+                        <li>Vulgariser une problématique d'ingénierie complexe pour un client.</li>
+                    </ul>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 2.5rem; font-weight: 500;">
+                ➔ Retrouvez l'intégralité de mes compétences techniques et logicielles détaillées sur la page <a href="geii.html" style="color: var(--accent-color); text-decoration: none; border-bottom: 1px solid var(--accent-color);">Mon BUT GEII</a>.
+            </p>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2 class="section-title">Me Contacter</h2>
+        <p style="text-align: center; color: var(--text-muted);">Actuellement à la recherche d'un contrat d'apprentissage de 3 ans dans les domaines de l'Électronique et des Systèmes Embarqués.</p>
+        <br>
+        <p style="text-align: center;"><strong>Email :</strong> <a href="mailto:mathieurey.geii@gmail.com" style="color: var(--accent-color);">mathieurey.geii@gmail.com</a></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 | Mathieu Rey - Portfolio. Tous droits réservés.</p>
+    </footer>
+
+</body>
+</html>

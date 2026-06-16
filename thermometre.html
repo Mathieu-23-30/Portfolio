@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet Thermomètre | Mathieu Rey</title>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --accent-color: #2e5cb8;
+            --accent-hover: #1e3a8a;
+            --nav-bg: #ffffff;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--nav-bg);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #e1e8ed;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        nav .logo { font-weight: bold; font-size: 1.5rem; color: var(--accent-color); text-transform: uppercase; }
+        nav ul { display: flex; list-style: none; gap: 1.5rem; align-items: center; }
+        nav a { color: var(--text-color); text-decoration: none; font-weight: 500; font-size: 0.95rem; }
+        nav a:hover, nav a.active { color: var(--accent-color); }
+
+        .cv-nav-btn {
+            background-color: transparent;
+            color: var(--accent-color) !important;
+            border: 1px solid var(--accent-color);
+            padding: 0.4rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        .cv-nav-btn:hover {
+            background-color: var(--accent-color);
+            color: white !important;
+        }
+
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #ffffff;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+            z-index: 1000;
+            border-radius: 4px;
+            border: 1px solid #e1e8ed;
+            top: 100%;
+            left: 0;
+        }
+        .dropdown-content a { color: #333333; padding: 12px 16px; text-decoration: none; display: block; text-align: left; }
+        .dropdown-content a:hover { background-color: #f4f7f6; color: var(--accent-color); }
+        .dropdown:hover .dropdown-content { display: block; }
+
+        .container {
+            max-width: 1100px;
+            margin: 100px auto 40px auto;
+            background-color: var(--card-bg);
+            padding: 3rem;
+            border-radius: 8px;
+            border: 1px solid #e1e8ed;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .back-btn { display: inline-block; color: var(--accent-color); text-decoration: none; margin-bottom: 2rem; font-weight: bold; }
+        h1 { color: var(--accent-color); margin-bottom: 0.5rem; font-size: 2.2rem; text-align: center; }
+        
+        .subtitle-container {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        .tag { display: inline-block; background: rgba(46, 92, 184, 0.1); color: var(--accent-color); padding: 0.3rem 0.7rem; border-radius: 4px; font-weight: bold; text-transform: uppercase; font-size: 0.8rem; }
+        
+        .phase-title {
+            text-align: center;
+            color: var(--accent-color);
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 3.5rem 0 2rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px double var(--accent-color);
+        }
+
+        .step-row {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .step-row.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .step-text {
+            flex: 1;
+        }
+
+        .step-text h2, .step-title-centered {
+            color: #0066cc;
+            font-size: 1.6rem;
+            margin-bottom: 1.2rem;
+            text-align: center;
+        }
+
+        .step-text p {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        .step-text ul {
+            list-style-position: inside;
+            margin-bottom: 1rem;
+            padding-left: 5px;
+        }
+
+        .step-text ul li {
+            margin-bottom: 0.4rem;
+        }
+
+        .step-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .step-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .image-caption {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        .drive-btn-container {
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+
+        .drive-btn {
+            display: inline-block;
+            background-color: #107c41;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .drive-btn:hover {
+            background-color: #0a5c2f;
+            transform: translateY(-1px);
+        }
+
+        .break-section {
+            background-color: #f8fafc;
+            margin: 2rem -3rem;
+            padding: 3rem;
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .logic-summary-box {
+            background: #ffffff;
+            border: 1px solid #e1e8ed;
+            border-radius: 6px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        @media (max-width: 768px) {
+            .step-row, .step-row.reverse { flex-direction: column; gap: 1.5rem; margin-bottom: 3rem; }
+            .container { padding: 1.5rem; }
+            .break-section { margin: 2rem -1.5rem; padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">Mathieu Rey</div>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="geii.html">Mon BUT GEII</a></li>
+                <li class="dropdown">
+                    <a href="#" class="active" style="cursor: default;">Projets ▾</a>
+                    <div class="dropdown-content">
+                        <a href="rafale.html">Miniature Rafale</a>
+                        <a href="thermometre.html">Thermomètre Intelligent</a>
+                    </div>
+                </li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="CV_Mathieu_Rey.pdf" target="_blank" class="cv-nav-btn">Mon CV 📄</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <a href="index.html" class="back-btn">⬅ Retour à l'accueil</a>
+        <h1>Thermomètre de bain intelligent</h1>
+        <div class="subtitle-container">
+            <span class="tag">Systèmes Embarqués & Informatique Industrielle</span>
+        </div>
+
+        <div class="phase-title">Phase 1 : Études & Conception</div>
+
+        <div class="step-row">
+            <div class="step-text">
+                <h2>1. Étude préliminaire du Cahier des Charges (CDC)</h2>
+                <p>Développé au sein d'une équipe de 4 étudiants, ce projet a débuté par l'analyse fonctionnelle des contraintes imposées par le cahier des charges client. Notre but était de concevoir l'architecture matérielle d'un système autonome de surveillance de température pour bébé.</p>
+                <p>Nous avons modélisé cette étude préliminaire sous la forme d'un schéma fonctionnel global, reliant chaque exigence (mesure, autonomie, coût) aux blocs physiques d'acquisition, de traitement d'informations, d'actions et de gestion de l'énergie.</p>
+                
+                <div class="drive-btn-container">
+                    <a href="https://drive.google.com/file/d/1wvBcjVh5_tQM7g4DvxEN5ZBViiIyPiu3/view?usp=drive_link" target="_blank" class="drive-btn">Consulter le CDC complet sur Google Drive ➔</a>
+                </div>
+            </div>
+            <div class="step-image">
+                <img src="thermometre_schema_blocs.png" alt="Schéma des blocs fonctionnels">
+                <div class="image-caption">Modélisation fonctionnelle et étude des blocs d'ingénierie préliminaire</div>
+            </div>
+        </div>
+
+        <div class="step-row reverse break-section">
+            <div class="step-text">
+                <h2>2. Architecture Algorithmique et Logique fonctionnelle (DDC)</h2>
+                <p>La phase de conception détaillée nous a conduits à définir la logique séquentielle complète de l'appareil au sein du Dossier de Définition de Conception (DDC). Sans utiliser de microcontrôleur programmable, nous avons structuré les blocs d'interconnexion pour automatiser le comportement de la LED RVB selon les seuils thermiques réels :</p>
+                <p>Cette structure garantit un retour d'information instantané pour veiller à la sécurité du bébé pendant le bain.</p>
+            </div>
+            <div class="step-image">
+                <div class="logic-summary-box">
+                    <h3 style="color: var(--accent-color); font-size: 1.1rem; margin-bottom: 1rem; text-align: center;">Synthèse des États Systèmes</h3>
+                    <ul style="list-style-type: none; padding: 0;">
+                        <li style="margin-bottom: 0.8rem;">💧 <strong style="color: #2563eb;">Eau fraîche (&lt; 36°C) :</strong><br>Allumage de la lumière <strong>Bleue</strong> en continu.</li>
+                        <li style="margin-bottom: 0.8rem;">✅ <strong style="color: #16a34a;">Eau idéale (36°C à 39°C) :</strong><br>Allumage de la lumière <strong>Verte</strong> en continu.</li>
+                        <li style="margin-bottom: 0rem;">⚠️ <strong style="color: #dc2626;">Eau dangereuse (&gt; 39°C) :</strong><br>Allumage de la lumière <strong>Rouge</strong> d'alerte.</li>
+                    </ul>
+                </div>
+                <div class="image-caption">Spécifications fonctionnelles des seuils de contrôle de sécurité</div>
+            </div>
+        </div>
+
+        <div class="phase-title">Phase 2 : Réalisation & Prototypage</div>
+
+        <div class="step-row">
+            <div class="step-text">
+                <h2>3. Saisie du Schéma Électronique (ISIS)</h2>
+                <p>Dans le cadre du Dossier de Fabrication (DDF), nous avons saisi le schéma de structure électronique sous le logiciel ISIS. Le circuit s'organise autour d'un capteur de température analogique linéaire LM35DZ qui délivre une tension proportionnelle aux degrés Celsius.</p>
+                <p>Ce signal est envoyé vers un amplificateur opérationnel double MCP6002 configuré en comparateur de tension matériel. Des portes logiques combinatoires (porte NAND SN74HC02N) traitent ensuite l'information pour aiguiller les commandes vers chaque branche de LED.</p>
+            </div>
+            <div class="step-image">
+                <img src="thermometre_schema.jpg" alt="Schéma structurel ISIS">
+                <div class="image-caption">Schéma d'acquisition et de traitement logique sous CAO ISIS</div>
+            </div>
+        </div>
+
+        <div class="step-row reverse break-section">
+            <div class="step-text">
+                <h2>4. Nomenclature et Sélection du Matériel</h2>
+                <p>Nous avons rédigé la nomenclature exhaustive (BOM) du produit afin de planifier l'approvisionnement des composants. Chaque pièce a fait l'objet d'un calcul de dimensionnement strict pour valider le respect du coût, de l'autonomie et de l'encombrement requis :</p>
+                <ul>
+                    <li>Régulateur de tension LM78L05ACZ pour stabiliser la tension de la ligne à 5V.</li>
+                    <li>Pont diviseur de tension à résistances axiales de précision (série E24) pour fixer les tensions de référence des seuils.</li>
+                    <li>Condensateurs de filtrage céramiques multicouches de 100nF et 470nF pour limiter les bruits électriques.</li>
+                </ul>
+            </div>
+            <div class="step-image">
+                <img src="thermometre_nomenclature.jpg" alt="Nomenclature des composants">
+                <div class="image-caption">Extrait du dossier de nomenclature des pièces électroniques de la carte</div>
+            </div>
+        </div>
+
+        <div class="step-row">
+            <div class="step-text">
+                <h2>5. Processus d'Implantation et d'Assemblage Matériel</h2>
+                <p>La fabrication physique de la carte a suivi le protocole complet de laboratoire en 9 grandes étapes industrielles : de l'impression des typons à l'échelle 1:1, l'insolation sous vide, la gravure chimique Bungard par oxydoréduction, jusqu'au perçage minutieux sur perceuse à colonne.</p>
+                <p>Nous avons ensuite procédé au brasage à l'étain des composants traversants (THD) sur le circuit imprimé fini. Le montage a respecté une logique de hauteur stricte (vias, résistances, supports de circuits intégrés, puis régulateur et connecteurs HE14) afin de garantir une implantation propre et stable.</p>
+            </div>
+            <div class="step-image">
+                <img src="thermometre_fabrication.jpg" alt="Carte électronique assemblée">
+                <div class="image-caption">Carte électronique finale câblée et assemblée en laboratoire d'IUT</div>
+            </div>
+        </div>
+
+        <div class="phase-title">Phase 3 : Vérification & Métrologie</div>
+
+        <div class="break-section" style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 280px; background: #ffffff; padding: 2rem; border-radius: 6px; border: 1px solid #e2e8f0; text-align: center;">
+                <h2 class="step-title-centered" style="font-size: 1.4rem;">6. Contrôle Structurel d'Isolement et Continuité</h2>
+                <p style="text-align: left;">Avant la mise sous tension initiale, des tests statiques indispensables ont été opérés au multimètre configuré en mode testeur d'impédance et de continuité. Nous avons validé la continuité électrique complète le long de chaque piste de cuivre et certifié l'isolation absolue (absence de micro-courts-circuits) entre les lignes parallèles.</p>
+                
+                <img src="thermometre_continuite.jpg" alt="Test de continuité au multimètre" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-top: 1rem;">
+                <div class="image-caption">Mesure rigoureuse de continuité sur les pistes du prototype</div>
+            </div>
+            <div style="flex: 1; min-width: 280px; background: #ffffff; padding: 2rem; border-radius: 6px; border: 1px solid #e2e8f0; text-align: center;">
+                <h2 class="step-title-centered" style="font-size: 1.4rem;">7. Campagne Métrologique et Enceinte Thermique</h2>
+                <p style="text-align: left;">Le projet s'est achevé par une campagne métrologique en conditions réelles au sein d'une enceinte thermique thermostatée afin de valider la conformité de notre carte par rapport aux exigences. Nous avons vérifié le basculement net des LED RVB aux seuils exacts de 36°C et 39°C, garantissant la sécurité finale de l'utilisateur.</p>
+                
+                <img src="thermometre_verification.jpg" alt="Banc d'essai enceinte thermique" style="max-width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-top: 1rem;">
+                <div class="image-caption">Banc de caractérisation thermique et étalonnage du capteur en laboratoire</div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

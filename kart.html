@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet Kart à Hélice | Mathieu Rey</title>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --accent-color: #2e5cb8;
+            --kart-theme: #0d9488;
+            --nav-bg: #ffffff;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--nav-bg);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #e1e8ed;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        nav .logo { font-weight: bold; font-size: 1.5rem; color: var(--accent-color); text-transform: uppercase; }
+        nav ul { display: flex; list-style: none; gap: 1.5rem; align-items: center; }
+        nav a { color: var(--text-color); text-decoration: none; font-weight: 500; font-size: 0.95rem; }
+        nav a:hover { color: var(--accent-color); }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #ffffff;
+            min-width: 220px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+            z-index: 1000;
+            border-radius: 4px;
+            border: 1px solid #e1e8ed;
+            top: 100%;
+            left: 0;
+        }
+        .dropdown-content a { color: #333333; padding: 12px 16px; text-decoration: none; display: block; }
+        .dropdown-content a:hover { background-color: #f4f7f6; color: var(--accent-color); }
+
+        .container {
+            max-width: 1000px;
+            margin: 110px auto 40px auto;
+            background-color: var(--card-bg);
+            padding: 3rem;
+            border-radius: 8px;
+            border: 1px solid #e1e8ed;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .back-btn { display: inline-block; color: var(--accent-color); text-decoration: none; margin-bottom: 2rem; font-weight: bold; }
+        
+        h1 { color: #1d3557; font-size: 2.4rem; margin-bottom: 0.5rem; text-align: center; }
+        .subtitle { text-align: center; color: var(--kart-theme); font-weight: 600; font-size: 1.2rem; margin-bottom: 2rem; }
+
+        .v-cycle-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin: 2.5rem 0; }
+        .v-step { background-color: #fafafa; border: 1px solid #e2e8f0; border-radius: 6px; padding: 1.5rem; border-top: 4px solid var(--kart-theme); transition: transform 0.2s, box-shadow 0.2s; }
+        .v-step:hover { transform: translateY(-3px); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .v-step h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .v-step h3 a { color: #1e293b; text-decoration: none; display: flex; justify-content: space-between; align-items: center; }
+        .v-step h3 a:hover { color: var(--kart-theme); text-decoration: underline; }
+        .v-step p { font-size: 0.95rem; color: #475569; }
+        
+        .pdf-icon { font-size: 0.8rem; background-color: #fee2e2; color: #ef4444; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+
+        h2 { color: var(--accent-color); font-size: 1.6rem; margin-top: 2.5rem; margin-bottom: 1rem; border-bottom: 2px solid #e1e8ed; padding-bottom: 0.3rem; }
+        p { margin-bottom: 1.2rem; font-size: 1.05rem; color: #444444; }
+
+        .highlight-box {
+            background-color: #f0fdfa;
+            border-left: 5px solid var(--kart-theme);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .my-work-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
+        .work-card { border: 1px solid #e2e8f0; border-radius: 6px; padding: 1.5rem; background-color: #f8fafc; }
+        .work-card h3 { color: #1e3a8a; font-size: 1.2rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+        
+        .item-bloc { margin-bottom: 1.2rem; }
+        .item-title { font-weight: 600; color: #1e293b; font-size: 0.98rem; display: block; margin-bottom: 0.15rem; }
+        .item-desc { color: #475569; font-size: 0.95rem; display: block; }
+
+        footer { text-align: center; padding: 2rem; color: #888; font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid #e1e8ed; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">Mathieu Rey</div>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="geii.html">Mon BUT GEII</a></li>
+                <li style="position: relative;" onmouseover="document.getElementById('drop').style.display='block'" onmouseout="document.getElementById('drop').style.display='none'">
+                    <a href="#" style="font-weight: bold; color: var(--accent-color);">Projets ▾</a>
+                    <div id="drop" class="dropdown-content" style="display: none; position: absolute; background:#fff; min-width:200px; box-shadow:0 8px 16px rgba(0,0,0,0.1); border:1px solid #e1e8ed; border-radius:4px;">
+                        <a href="rafale.html" style="display:block; padding:12px 16px; text-decoration:none; color:#333;">Miniature Rafale</a>
+                        <a href="thermometre.html" style="display:block; padding:12px 16px; text-decoration:none; color:#333;">Thermomètre Intelligent</a>
+                        <a href="kart.html" style="display:block; padding:12px 16px; text-decoration:none; color:#333; background:#f4f7f6;">Kart à Hélice (SAÉ 2.01) 🏎️</a>
+                    </div>
+                </li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <a href="index.html#sae-projets" class="back-btn">⬅ Retour aux projets</a>
+        
+        <h1>Kart à Hélice</h1>
+        <div class="subtitle">SAÉ 2.01 & 2.02 — Projet en équipe de 8 étudiants</div>
+
+        <p>Le <strong>Kart à Hélice</strong> est le plus gros projet de ma première année. Le but ? Construire un petit véhicule capable de rouler tout seul grâce au vent soufflé par une hélice de drone géante. Ce projet regroupe tout ce qu'on apprend à l'IUT : l'électricité, la programmation, la mécanique et la gestion d'une grande équipe.</p>
+
+        <div class="highlight-box">
+            <strong>💡 Organisation de l'équipe :</strong> Pour ce projet à 8 étudiants, nous nous sommes séparés en deux groupes de quatre très distincts : 
+            <ul>
+                <li>Une première équipe de <strong>4 étudiants</strong> s'est occupée de fabriquer la carte électronique du <strong>récepteur</strong> (qui vient se fixer directement sur le châssis pour faire tourner le moteur et piloter le kart).</li>
+                <li>Une seconde équipe de <strong>4 étudiants</strong> (dont moi) s'est chargée de concevoir l'<strong>émetteur</strong>, c'est-à-dire la télécommande qui permet de piloter le kart à distance.</li>
+            </ul>
+        </div>
+
+        <h2>Les 4 grandes étapes de notre projet</h2>
+        <p style="margin-bottom: 0.5rem;">Pour réussir, nous avons suivi la méthode classique de l'industrie à travers 4 documents de référence.</p>
+        <p style="font-size: 0.95rem; color: #0d9488; font-weight: 500; margin-bottom: 1.5rem;">➔ 💡 Cliquez sur le titre d'une case pour ouvrir notre rapport complet en PDF :</p>
+        
+        <div class="v-cycle-grid">
+            <div class="v-step">
+                <h3><a href="KAH_CDC_V2.docx.pdf" target="_blank">1. Le CDC <span class="pdf-icon">PDF</span></a></h3>
+                <p>Rassemble toutes les contraintes imposées par le client, comme la taille maximale du châssis, la limite de poids et la présence obligatoire d'un bouton d'arrêt d'urgence.</p>
+            </div>
+            <div class="v-step">
+                <h3><a href="KAH_DDC_EQ43 (1).pdf" target="_blank">2. Le DDC <span class="pdf-icon">PDF</span></a></h3>
+                <p>Détaille toute notre phase de réflexion, le choix des pièces sur internet et les calculs théoriques sur ordinateur pour valider la puissance du moteur et la taille de l'hélice.</p>
+            </div>
+            <div class="v-step">
+                <h3><a href="KAH_DDF_RCPT.pdf" target="_blank">3. Le DDF <span class="pdf-icon">PDF</span></a></h3>
+                <p>Sert de plan de montage et de guide pratique. Il explique comment nous avons dessiné les circuits imprimés, soudé les composants et câblé l'alimentation.</p>
+            </div>
+            <div class="v-step">
+                <h3><a href="KAH_DDV.docx.pdf" target="_blank">4. Le DDV <span class="pdf-icon">PDF</span></a></h3>
+                <p>Regroupe l'ensemble de nos tests réels sur piste. Il prouve par des mesures locales que le kart avance bien et que la coupure de sécurité coupe le moteur instantanément.</p>
+            </div>
+        </div>
+
+        <h2>Mon travail de conception (DDC) : Blocs Acquisition & Action</h2>
+        <p>Au sein du Dossier de Conception (DDC), j'ai pris en charge la sélection des composants et le respect des exigences pour les deux fonctions de notre récepteur :</p>
+
+        <div class="my-work-grid">
+            <div class="work-card">
+                <h3>📥 Fonction : Acquérir</h3>
+                <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1rem;"><em>Objectif : Réceptionner le signal de commande</em></p>
+                
+                <div class="item-bloc">
+                    <span class="item-title">📡 Capteur Infrarouge</span>
+                    <span class="item-desc">Choix et validation du composant récepteur infrarouge pour capter proprement les ordres de vitesse et d'orientation envoyés par la télécommande.</span>
+                </div>
+            </div>
+
+            <div class="work-card">
+                <h3>⚡ Fonction : Actionner</h3>
+                <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 1rem;"><em>Objectif : Piloter les moteurs, les voyants et le son</em></p>
+
+                <div class="item-bloc">
+                    <span class="item-title">🏎️ Commande du Moteur de propulsion</span>
+                    <span class="item-desc">Génération d'un signal PWM précis pour donner l'ordre de vitesse de rotation au contrôleur du moteur Brushless.</span>
+                </div>
+
+                <div class="item-bloc">
+                    <span class="item-title">📐 Servomoteur de Roue</span>
+                    <span class="item-desc">Génération du signal PWM adapté pour contrôler précisément l'angle d'orientation des roues avant du kart.</span>
+                </div>
+
+                <div class="item-bloc">
+                    <span class="item-title">🔵 Indicateur de Connexion</span>
+                    <span class="item-desc">Allumage d'une LED bleue dès qu'une commande infrarouge valide avec la bonne adresse NEC arrive au kart.</span>
+                </div>
+
+                <div class="item-bloc">
+                    <span class="item-title">🟢 Indicateur de Tension</span>
+                    <span class="item-desc">Allumage d'une LED verte témoin pour confirmer visuellement que la carte électronique du récepteur est bien alimentée.</span>
+                </div>
+
+                <div class="item-bloc">
+                    <span class="item-title">🔊 Klaxon</span>
+                    <span class="item-desc">Envoi d'un signal électrique carré de 4kHz sur un buzzer sonore pour avertir de la présence du kart.</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 2.5rem 0;">
+            <img src="schema-fonctionnel.png" alt="Arbre des exigences fonctionnelles du récepteur" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #e2e8f0;">
+            <span style="display: block; color: #64748b; font-size: 0.9rem; margin-top: 0.6rem; font-style: italic;">Notre arbre des exigences liant le bloc de traitement aux indicateurs et commandes physiques</span>
+        </div>
+
+        <h2>Fabrication et Tests finaux</h2>
+        <p>Pendant la fabrication, nous avons dû faire très attention à ce que l'émetteur et le récepteur communiquent parfaitement sans coupure. J'ai passé du temps sur la carte de commande pour m'assurer que la télécommande envoyait bien les bons signaux au kart.</p>
+
+        <p>Lors des derniers tests sur piste, tout a fonctionné comme prévu :</p>
+        <ul>
+            <li><strong>Sécurité au top :</strong> Quand on appuie sur le gros bouton rouge d'urgence, le moteur s'éteint pile en moins d'une seconde.</li>
+            <li><strong>Le kart avance bien :</strong> Le vent généré est assez fort pour faire démarrer le véhicule d'un coup sec, même sur un sol rugueux.</li>
+        </ul>
+        
+        <p style="margin-top: 1.5rem; margin-bottom: 2rem;">Ce grand projet à 8 m'a vraiment appris à partager le travail, à faire communiquer deux blocs électroniques ensemble (la manette et le kart) et à documenter chaque étape clairement pour les profs.</p>
+
+        <div style="text-align: center; margin-top: 2rem; border-top: 1px solid #e1e8ed; padding-top: 2rem;">
+            <img src="kart-fini.jpg" alt="Photo du kart à hélice finalisé" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 6px 16px rgba(0,0,0,0.1); border: 1px solid #e2e8f0;">
+            <span style="display: block; color: #475569; font-size: 0.95rem; margin-top: 0.7rem; font-weight: 500;">Le prototype final de notre Kart à Hélice prêt pour les essais dynamiques sur piste</span>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 | Mathieu Rey - Portfolio Professionnel</p>
+    </footer>
+
+</body>
+</html>

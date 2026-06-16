@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon BUT GEII | Mathieu Rey</title>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --accent-color: #2e5cb8;
+            --nav-bg: #ffffff;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--nav-bg);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #e1e8ed;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        nav .logo-name { font-weight: bold; font-size: 1.5rem; color: var(--accent-color); text-transform: uppercase; }
+        nav ul { display: flex; list-style: none; gap: 1.5rem; align-items: center; }
+        nav a { color: var(--text-color); text-decoration: none; font-weight: 500; font-size: 0.95rem; }
+        nav a:hover, nav a.active { color: var(--accent-color); }
+
+        .cv-nav-btn {
+            background-color: transparent;
+            color: var(--accent-color) !important;
+            border: 1px solid var(--accent-color);
+            padding: 0.4rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        .cv-nav-btn:hover {
+            background-color: var(--accent-color);
+            color: white !important;
+        }
+
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #ffffff;
+            min-width: 220px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+            z-index: 1000;
+            border-radius: 4px;
+            border: 1px solid #e1e8ed;
+            top: 100%;
+            left: 0;
+        }
+        .dropdown-content a { color: #333333; padding: 12px 16px; text-decoration: none; display: block; }
+        .dropdown-content a:hover { background-color: #f4f7f6; color: var(--accent-color); }
+        .dropdown:hover .dropdown-content { display: block; }
+
+        .container {
+            max-width: 1100px;
+            margin: 110px auto 40px auto;
+            background-color: var(--card-bg);
+            padding: 3rem;
+            border-radius: 8px;
+            border: 1px solid #e1e8ed;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            position: relative; 
+        }
+
+        .back-btn { display: inline-block; color: var(--accent-color); text-decoration: none; margin-bottom: 2rem; font-weight: bold; }
+        
+        .absolute-logo-geii {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            height: 70px;
+            width: auto;
+            z-index: 5;
+        }
+
+        h1 { 
+            color: var(--accent-color); 
+            font-size: 2.2rem; 
+            text-align: center; 
+            border-bottom: 2px solid #e1e8ed;
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+            padding-top: 1rem; 
+        }
+        
+        h2 { color: #0066cc; font-size: 1.6rem; border-bottom: 2px solid var(--accent-color); padding-bottom: 0.5rem; margin-top: 2.5rem; margin-bottom: 1.2rem; text-align: center; }
+        p { font-size: 1.05rem; color: var(--text-color); margin-bottom: 1.2rem; }
+        
+        .specialty-box {
+            background-color: #f8fafc;
+            border-left: 5px solid var(--accent-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .specialty-box h3 { color: var(--accent-color); margin-bottom: 0.5rem; }
+
+        .sae-container {
+            background-color: #f0fdfa;
+            border: 1px solid #ccfbf1;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2.5rem 0;
+        }
+        .sae-container h3 { color: #0d9488; font-size: 1.4rem; margin-bottom: 1rem; }
+        .sae-container ul { list-style-position: inside; margin-left: 10px; margin-top: 0.5rem; }
+        .sae-container ul li { margin-bottom: 0.4rem; font-size: 0.98rem; }
+
+        .grid-skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+        .card-skill { background-color: #f8fafc; padding: 1.5rem; border-radius: 6px; border: 1px solid #e2e8f0; }
+        .card-skill h3 { color: var(--accent-color); font-size: 1.1rem; margin-bottom: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.3rem; }
+        .card-skill ul { list-style-position: inside; padding-left: 5px; }
+        .card-skill ul li { margin-bottom: 0.5rem; font-size: 0.95rem; list-style-type: disc; }
+
+        .tools-section {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        .tools-section h3 { color: var(--accent-color); font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center; }
+        .badge-grid { display: flex; flex-wrap: wrap; gap: 0.8rem; justify-content: center; }
+        .badge { background-color: #ffffff; color: #475569; border: 1px solid #cbd5e1; padding: 0.5rem 1.2rem; border-radius: 50px; font-weight: 600; font-size: 0.95rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .badge.security { background-color: #ef4444; color: #ffffff; border-color: #dc2626; }
+
+        @media (max-width: 768px) {
+            .absolute-logo-geii { position: static; display: block; margin: 0 auto 1rem auto; height: 60px; }
+            h1 { font-size: 1.8rem; padding-top: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo-name">Mathieu Rey</div>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="geii.html" class="active">Mon BUT GEII</a></li>
+                <li class="dropdown">
+                    <a href="#" style="cursor: default;">Projets ▾</a>
+                    <div class="dropdown-content">
+                        <a href="rafale.html">Miniature Rafale</a>
+                        <a href="thermometre.html">Thermomètre Intelligent</a>
+                        <a href="kart.html">Propeller Kart (SAÉ 2.01) 🏎️</a>
+                    </div>
+                </li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="CV_Mathieu_Rey.pdf" target="_blank" class="cv-nav-btn">Mon CV 📄</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <a href="index.html" class="back-btn">⬅ Retour à l'accueil</a>
+        
+        <img src="image_af4d2e.png" alt="Logo GEII IUT de Bordeaux" class="absolute-logo-geii">
+        
+        <h1>Le Bachelor de Technologie (BUT) GEII</h1>
+        
+        <h2>Présentation de la formation</h2>
+        <p>Le BUT Génie Électrique et Informatique Industrielle (GEII) dispensé à l'IUT de Bordeaux est un diplôme national en 3 ans exigeant et professionnalisant. Il forme des techniciens supérieurs et de futurs ingénieurs capables de concevoir, vérifier, intégrer et maintenir des systèmes industriels et électroniques de pointe.</p>
+
+        <div class="specialty-box">
+            <h3>Mon Parcours : Électronique et Systèmes Embarqués (ESE)</h3>
+            <p>Pour ma deuxième année, j'ai choisi de me spécialiser dans le parcours <strong>Électronique et Systèmes Embarqués</strong>. Ce choix répond directement à ma passion pour la CAO électronique, le maquettage matériel et le codage au plus proche du processeur, des compétences clés recherchées dans les secteurs aéronautique et de la défense.</p>
+        </div>
+
+        <div class="sae-container">
+            <h3>🚀 Qu'est-ce qu'une SAÉ (Situation d'Apprentissage & d'Évaluation) ?</h3>
+            <p>Au cœur de la réforme du BUT, les <strong>SAÉ</strong> sont des projets de mise en situation professionnelle concrète. Contrairement aux travaux pratiques traditionnels isolés, une SAÉ nous demande d'agir en autonomie, souvent en équipe, pour répondre à un cahier des charges technique complexe en croisant l'ensemble de nos matières (électronique, programmation, métrologie, gestion de projet).</p>
+            <p><strong>Ce que nous y faisons concrètement :</strong></p>
+            <ul>
+                <li>Analyse fonctionnelle et dimensionnement théorique de systèmes complexes.</li>
+                <li>Conception assistée par ordinateur (CAO) de schémas et de circuits imprimés (PCB).</li>
+                <li>Fabrication en laboratoire (insolation, gravure chimique, perçage et brasage des composants).</li>
+                <li>Programmation embarquée de microcontrôleurs et interfaçage avec des capteurs.</li>
+                <li>Validation expérimentale, campagnes de mesures et rédaction de livrables d'ingénierie (dossiers de fabrication, nomenclatures).</li>
+            </ul>
+        </div>
+
+        <h2>Mon Portefeuille de Compétences Globales</h2>
+        <div class="grid-skills">
+            <div class="card-skill">
+                <h3>1. Réaliser des installations électriques et électroniques</h3>
+                <ul>
+                    <li>Lire et interpréter des schémas électriques complexes.</li>
+                    <li>Câbler, braser et tester des circuits imprimés (vias, CMS, THD).</li>
+                    <li>Utiliser les appareils de mesure de labo (multimètre, oscilloscope).</li>
+                    <li>Respecter les normes de sécurité électrique au poste.</li>
+                </ul>
+            </div>
+            <div class="card-skill">
+                <h3>2. Programmer et développer des systèmes informatiques</h3>
+                <ul>
+                    <li>Programmation et algorithmique par blocs et bases de langages.</li>
+                    <li>Comprendre l'architecture et les registres des microcontrôleurs.</li>
+                    <li>Développer, implémenter et téléverser un programme embarqué.</li>
+                </ul>
+            </div>
+            <div class="card-skill">
+                <h3>3. Automatiser et contrôler des systèmes</h3>
+                <ul>
+                    <li>Comprendre le fonctionnement d'une chaîne d'acquisition automatisée.</li>
+                    <li>Interfacer et configurer des capteurs (sonde LM35, capteurs Reed).</li>
+                    <li>Programmer et contrôler des automates programmables industriels (API).</li>
+                </ul>
+            </div>
+            
+            <div class="card-skill" style="background-color: #f0fdf4; border-color: #bbf7d0;">
+                <h3>4. Compétences Humaines, Organisationnelles & Vie Civile</h3>
+                <ul>
+                    <li><strong>Travail en équipe & Cohésion :</strong> Répartir efficacement les rôles et collaborer activement au sein de groupes projets complexes (SAÉ).</li>
+                    <li><strong>Rigueur & Gestion de projet :</strong> Rédiger des livrables techniques professionnels conformes aux exigences d'un client (CDC, DDF).</li>
+                    <li><strong>Sens des responsabilités & Leadership :</strong> Compétences relationnelles développées sur le terrain via la pratique du basket-ball en club (coaching et arbitrage).</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="tools-section">
+            <h3>Environnement Technique, Logiciels & Habilitations</h3>
+            <div class="badge-grid">
+                <div class="badge security">Habilitation Électrique B1V ⚡</div>
+                <div class="badge">Proteus (ISIS & ARES)</div>
+                <div class="badge">C++ (Arduino / Microcontrôleurs)</div>
+                <div class="badge">TIA Portal V18</div>
+                <div class="badge">CAO 3D (CATIA, Onshape)</div>
+                <div class="badge">LT Spice</div>
+                <div class="badge">Appareils de mesure (Multimètre & Oscilloscope)</div>
+                <div class="badge">Pack Office (Word, Excel, PowerPoint)</div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

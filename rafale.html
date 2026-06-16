@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet Rafale | Mathieu Rey</title>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --text-muted: #666666;
+            --accent-color: #2e5cb8;
+            --nav-bg: #ffffff;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--nav-bg);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #e1e8ed;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        nav .logo { font-weight: bold; font-size: 1.5rem; color: var(--accent-color); text-transform: uppercase; }
+        nav ul { display: flex; list-style: none; gap: 1.5rem; align-items: center; }
+        nav a { color: var(--text-color); text-decoration: none; font-weight: 500; font-size: 0.95rem; }
+        nav a:hover, nav a.active { color: var(--accent-color); }
+
+        .cv-nav-btn {
+            background-color: transparent;
+            color: var(--accent-color) !important;
+            border: 1px solid var(--accent-color);
+            padding: 0.4rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        .cv-nav-btn:hover {
+            background-color: var(--accent-color);
+            color: white !important;
+        }
+
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #ffffff;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+            z-index: 1000;
+            border-radius: 4px;
+            border: 1px solid #e1e8ed;
+            top: 100%;
+            left: 0;
+        }
+        .dropdown-content a { color: #333333; padding: 12px 16px; text-decoration: none; display: block; text-align: left; }
+        .dropdown-content a:hover { background-color: #f4f7f6; color: var(--accent-color); }
+        .dropdown:hover .dropdown-content { display: block; }
+
+        .container {
+            max-width: 1100px;
+            margin: 100px auto 40px auto;
+            background-color: var(--card-bg);
+            padding: 3rem;
+            border-radius: 8px;
+            border: 1px solid #e1e8ed;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .back-btn { display: inline-block; color: var(--accent-color); text-decoration: none; margin-bottom: 2rem; font-weight: bold; }
+        h1 { color: var(--accent-color); margin-bottom: 0.5rem; font-size: 2.2rem; text-align: center; } 
+        .tag-container { text-align: center; margin-bottom: 2.5rem; } 
+        .tag { display: inline-block; background: rgba(46, 92, 184, 0.1); color: var(--accent-color); padding: 0.3rem 0.7rem; border-radius: 4px; font-weight: bold; text-transform: uppercase; font-size: 0.8rem; }
+        
+        .step-row {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .step-row.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .step-text {
+            flex: 1;
+        }
+
+        .step-text h2, .step-title-centered {
+            color: #0066cc;
+            font-size: 1.6rem;
+            margin-bottom: 1.2rem;
+            text-align: center;
+        }
+
+        .step-text p {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        .step-text ul {
+            list-style-position: inside;
+            margin-bottom: 1rem;
+            padding-left: 5px;
+        }
+
+        .step-text ul li {
+            margin-bottom: 0.4rem;
+        }
+
+        .step-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .step-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .image-caption {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        .break-section {
+            background-color: #f8fafc;
+            margin: 2rem -3rem;
+            padding: 3rem;
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        @media (max-width: 768px) {
+            .step-row, .step-row.reverse { flex-direction: column; gap: 1.5rem; margin-bottom: 3rem; }
+            .container { padding: 1.5rem; }
+            .break-section { margin: 2rem -1.5rem; padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">Mathieu Rey</div>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="geii.html">Mon BUT GEII</a></li>
+                <li class="dropdown">
+                    <a href="#" class="active" style="cursor: default;">Projets ▾</a>
+                    <div class="dropdown-content">
+                        <a href="rafale.html">Miniature Rafale</a>
+                        <a href="thermometre.html">Thermomètre Intelligent</a>
+                    </div>
+                </li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="CV_Mathieu_Rey.pdf" target="_blank" class="cv-nav-btn">Mon CV 📄</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <a href="index.html" class="back-btn">⬅ Retour à l'accueil</a>
+        <h1>Carte de signalisation « Son & Lumière » — Miniature Rafale</h1>
+        <div class="tag-container">
+            <span class="tag">Électronique & Conception Hardware</span>
+        </div>
+
+        <div class="step-row">
+            <div class="step-text">
+                <h2>1. Préparation et Impression des Typons</h2>
+                <p>La phase de fabrication débute systématiquement par un travail de PAO rigoureux. Pour obtenir une opacité maximale et bloquer parfaitement les UV lors de l'insolation, nous superposons deux impressions distinctes sur transparents :</p>
+                <ul>
+                    <li><strong>Face inférieure (Bottom Copper) :</strong> Éditée en vue standard à l'échelle 1:1.</li>
+                    <li><strong>Face supérieure (Top Copper) :</strong> Générée en miroir à l'échelle 1:1 afin de plaquer l'encre directement contre le cuivre.</li>
+                </ul>
+                <p>L'alignement des deux faces est minutieusement ajusté et solidarisé sur une plaque de verre avant l'introduction en machine.</p>
+            </div>
+            <div class="step-image">
+                <img src="rafale_typons.jpg" alt="Visualisation des typons">
+                <div class="image-caption">Visualisation des typons cuivre supérieur et inférieur</div>
+            </div>
+        </div>
+
+        <div class="step-row reverse break-section">
+            <div class="step-text">
+                <h2>2. Insolation UV sous vide</h2>
+                <p>La plaque de circuit imprimé, revêtue d'un film résine photosensible, est insérée sous les typons au cœur d'une insoleuse industrielle. La mise sous vide de la machine garantit un contact parfait et sans bulle d'air entre le calque et le cuivre.</p>
+                <p>L'exposition aux rayonnements ultraviolets permet de polymériser et de fixer le dessin de nos pistes directement sur la couche protectrice du circuit.</p>
+            </div>
+            <div class="step-image">
+                <img src="rafale_insolation.jpg" alt="Plaque de circuit dans l'insoleuse">
+                <div class="image-caption">Plaque de circuit dans l'insoleuse sous vide</div>
+            </div>
+        </div>
+
+        <div class="step-row">
+            <div class="step-text">
+                <h2>3. Phase Oxydoréduction (Gravure)</h2>
+                <p>Le circuit est plongé dans une graveuse à jet de marque Bungard, paramétrée sur une vitesse d'avance de 30. Le bain d'acide attaque et dissout le cuivre brut qui n'a pas été protégé par l'insolation.</p>
+                <p>L'opération demande une surveillance constante et dure en moyenne 5 à 6 minutes. En cas de zones de cuivre persistent, un second balayage rapide (vitesse 80) est configuré pour affiner les pistes.</p>
+            </div>
+            <div class="step-image">
+                <img src="rafale_gravure.jpg" alt="Machine de gravure Bungard">
+                <div class="image-caption">La machine de gravure Bungard en laboratoire</div>
+            </div>
+        </div>
+
+        <div class="break-section" style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 280px; background: #ffffff; padding: 2rem; border-radius: 6px; border: 1px solid #e2e8f0;">
+                <h2 class="step-title-centered" style="font-size: 1.4rem;">4. Nettoyage et Révélation du Cuivre</h2>
+                <p>Afin de mettre le cuivre totalement à nu, la carte subit une insolation de nettoyage rapide sans aucun masque. Un dernier passage dans le bain de révélateur élimine définitivement les restes de film protecteur, laissant apparaître des pistes nettes.</p>
+            </div>
+            <div style="flex: 1; min-width: 280px; background: #ffffff; padding: 2rem; border-radius: 6px; border: 1px solid #e2e8f0;">
+                <h2 class="step-title-centered" style="font-size: 1.4rem;">5. Tests de Continuity et d'Isolation</h2>
+                <p>Avant d'aller plus loin, une phase de contrôle électrique est menée à l'aide d'un multimètre configuré en mode testeur de continuité (bip) :</p>
+                <ul style="list-style-position: inside;">
+                    <li><strong>Validation des lignes :</strong> Le signal sonore doit être franc d'une extrémité à l'autre d'une même piste.</li>
+                    <li><strong>Contrôle d'isolement :</strong> Aucune continuité (aucun bip) ne doit exister entre deux pistes parallèles pour écarter tout risque de court-circuit.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="step-row">
+            <div class="step-text">
+                <h2>6. Perçage de précision des pastilles</h2>
+                <p>Cette phase mécanique s'effectue sur une perceuse à colonne d'atelier, en suivant rigoureusement les coordonnées du plan de perçage issu d'ARES (Drill Plot).</p>
+                <ul>
+                    <li><strong>Calibrage :</strong> Le diamètre du foret est mesuré et validé au pied à coulisse électronique.</li>
+                    <li><strong>Montage :</strong> Fixation concentrique du foret dans le mandrin avec un serrage optimal.</li>
+                    <li><strong>Sécurité :</strong> Configuration de la butée de course pour maintenir une garde de sécurité de 1 à 2 cm au-dessus de la pièce.</li>
+                </ul>
+            </div>
+            <div class="step-image">
+                <img src="rafale_percage.jpg" alt="Perçage des pastilles">
+                <div class="image-caption">Perçage minutieux des pastilles sur colonne</div>
+            </div>
+        </div>
+
+        <div class="step-row reverse break-section">
+            <div class="step-text">
+                <h2>7. Soudage des composants électroniques</h2>
+                <p>Le fer à souder est réglé à 380°C qui est la température de fusion de l'étain. L'intégration des composants suit une logique de hauteur stricte pour faciliter la manipulation : nous implantons d'abord les vias de continuité, puis les résistances, les supports d'enfilage de circuits intégrés, et enfin les condensateurs volumineux.</p>
+                <p><strong>Règle de l'art :</strong> La panne du fer doit chauffer simultanément la pastille de cuivre et la broche du composant pendant 3 secondes. L'apport d'étain se fait en 2 secondes pour obtenir un joint lisse, brillant et formant un cône régulier à 45°.</p>
+            </div>
+            <div class="step-image">
+                <img src="rafale_soudure.jpg" alt="Soudure des composants">
+                <div class="image-caption">Soudure des composants traversants sur la carte</div>
+            </div>
+        </div>
+
+        <div style="text-align: center; padding: 2rem 0;">
+            <h2 style="color: #0066cc; font-size: 1.6rem; margin-bottom: 1rem; text-align: center;">8. Inspection et Contrôle Qualité Final</h2>
+            <p style="max-width: 700px; margin: 0 auto; color: var(--text-muted); font-size: 1.05rem;">La mise sous tension de la carte n'intervient qu'après une double validation. Nous realizons d'abord une inspection visuelle minutieuse (orientation des composants polarisés, conformité des valeurs de résistances), doublée d'un contrôle de l'absence de court-circuit sur les lignes d'alimentation principales.</p>
+        </div>
+
+    </div>
+</body>
+</html>
